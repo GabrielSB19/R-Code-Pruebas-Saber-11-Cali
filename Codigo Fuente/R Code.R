@@ -29,6 +29,19 @@ Genero <- table(PieGender)
 pie(Genero, main = "Becados por genero", col = c("purple", "orange"), clockwise = TRUE)
 legend("topright", c("Feminio", "Masculino"), cex = 1.5, fill = c("purple", "orange"))
 Genero.TFrecuenciaGenero <- freq(ESTU_GENERO, plot = FALSE)
+Genero.TFrecuenciaGenero
+
+#Kind College exploration
+PieKindC <- factor(BaseDataBecados$COLE_NATURALEZA, labels = c("No oficial", "oficial"))
+KindCollage <- table(PieKindC)
+pie(KindCollage, main = "Becados segun el tipo de colegio", col = c("green", "yellow"), clockwise = TRUE)
+legend("topright", c("No oficial", "Oficial"), cex = 1.5, fill = c("green", "yellow"))
+KindCollage.TFrecuenciaKindC <- freq(COLE_NATURALEZA, plot = FALSE)
+KindCollage.TFrecuenciaKindC
+
+#GPS College exploration
+PieGpsC <- factor(BaseDataBecados$COLE_AREA_UBICACION, labels = c("Urbano", "Rural"))
+GpsCollage <- table(PieGpsC)
 
 #Hypotheses for the average
 LCData <- BaseDataNoBecados[c(10)]
