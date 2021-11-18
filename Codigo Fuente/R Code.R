@@ -84,14 +84,14 @@ PData <- BaseData[c(29)]
 PDataSucces <- filter(PData, ESTU_GENERACIONE2 == 1)
 prop.test(x = nrow(PDataSucces), n = nrow(PData), p = 0.15, alternative = "less", conf.level = 0.95, correct = FALSE)
 
-<<<<<<< HEAD
+
 #ANOVA Which stratum belong to the students who obtained a better score on the English test?
 attach(BaseData)
 boxplot(PUNT_INGLES ~ FAMI_ESTRATOVIVIENDA) #Delete atypical data
 anova<- aov(lm(PUNT_INGLES ~FAMI_ESTRATOVIVIENDA))
 summary(anova)
 TukeyHSD(anova )
-=======
+
 #Hypotheses for Independent samples
 E1Data <- filter(BaseData, FAMI_ESTRATOVIVIENDA == "Estrato 1")
 E3Data <- filter(BaseData, FAMI_ESTRATOVIVIENDA == "Estrato 3")
