@@ -18,7 +18,7 @@ library(descr)
 library(openxlsx)
 library(dplyr)
 
-BaseData <- read_excel("Escritorio/ICESI/Cuarto Semestre de Ingenieria de sistemas/Talleres/Inferencia/R-workSpace/ProyectoFinalInfe/R-Code-Pruebas-Saber-11-Cali/Base de Datos/Saber_11__2019-2 Trabajo Final.xlsx")
+BaseData <- read_excel("")
 
 BaseDataBecados <- filter(BaseData, ESTU_GENERACIONE == "GENERACION E - EXCELENCIA NACIONAL")
 BaseDataNoBecados <- filter(BaseData, ESTU_GENERACIONE == "NO")
@@ -50,14 +50,14 @@ GpsCollage.TFrecuenciaGPSC
 #Stratum B exploration
 BarStratumB <- factor(BaseDataBecados$FAMI_ESTRATOVIVIENDA, labels = c("Estrato 1", "Estrato 2", "Estrato 3" , "Estrato 4-6"))
 StratumBecados <- table(BarStratumB)
-barplot(StratumBecados, main = "Obtención de becas por estratos")
+barplot(StratumBecados, main = "Obtenci?n de becas por estratos")
 StratumBecados.TFrecuenciaStr <- freq(FAMI_ESTRATOVIVIENDA, plot = FALSE)
 StratumBecados.TFrecuenciaStr
 
 #Stratum NB exploration
 BarStratumNB <- factor(BaseDataNoBecados$FAMI_ESTRATOVIVIENDA, labels = c("Estrato 1", "Estrato 2", "Estrato 3" , "Estrato 4-6"))
 StratumNBecados <- table(BarStratumNB)
-barplot(StratumNBecados, main = "No obtención de becas por estratos")
+barplot(StratumNBecados, main = "No obtenci?n de becas por estratos")
 StratumNBecados.TFrecuenciaStr <- freq(FAMI_ESTRATOVIVIENDA, plot = FALSE)
 StratumNBecados.TFrecuenciaStr
 
@@ -71,7 +71,7 @@ Internet.TFrecuenciaI
 #Read exploration
 BarRead <- factor(BaseDataBecados$ESTU_DEDICACIONLECTURADIARIA, labels = c("30 minutos o menos", "Entre 1 y 2 horas", "Entre 30 y 60 min", "Mas de 2 horas", "No lee"))
 Read <- table(BarRead)
-barplot(Read, main = "Dedicación de lectura diaria")
+barplot(Read, main = "Dedicaci?n de lectura diaria")
 Read.TFrecuenciaR <- freq(ESTU_DEDICACIONLECTURADIARIA, plot = FALSE)
 Read.TFrecuenciaR
 
