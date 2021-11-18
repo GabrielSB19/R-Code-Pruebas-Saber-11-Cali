@@ -111,5 +111,5 @@ t.test(x = E1Data$PUNT_GLOBAL, y = E3Data$PUNT_GLOBAL, mu = 0, alternative = "gr
 
 
 
->>>>>>> 8073c73ca50e81900a09b5e8cc9ea2f98e81852b
+
 
