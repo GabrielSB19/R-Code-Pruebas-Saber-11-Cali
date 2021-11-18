@@ -47,13 +47,33 @@ legend("topright", c("Urbano", "Rural"), cex = 1.5, fill = c("red", "blue"))
 GpsCollage.TFrecuenciaGPSC <- freq(COLE_AREA_UBICACION, plot = FALSE)
 GpsCollage.TFrecuenciaGPSC
 
-#Stratum exploration
+#Stratum B exploration
 BarStratumB <- factor(BaseDataBecados$FAMI_ESTRATOVIVIENDA, labels = c("Estrato 1", "Estrato 2", "Estrato 3" , "Estrato 4-6"))
 StratumBecados <- table(BarStratumB)
-barplot(StratumBecados)
+barplot(StratumBecados, main = "Obtención de becas por estratos")
 StratumBecados.TFrecuenciaStr <- freq(FAMI_ESTRATOVIVIENDA, plot = FALSE)
 StratumBecados.TFrecuenciaStr
 
+#Stratum NB exploration
+BarStratumNB <- factor(BaseDataNoBecados$FAMI_ESTRATOVIVIENDA, labels = c("Estrato 1", "Estrato 2", "Estrato 3" , "Estrato 4-6"))
+StratumNBecados <- table(BarStratumNB)
+barplot(StratumNBecados, main = "No obtención de becas por estratos")
+StratumNBecados.TFrecuenciaStr <- freq(FAMI_ESTRATOVIVIENDA, plot = FALSE)
+StratumNBecados.TFrecuenciaStr
+
+#Internet exploration
+BarInternet <- factor(BaseDataBecados$ESTU_DEDICACIONINTERNET, labels = c("30 minutos o menos", "Entre 1 y 3 horas", "Entre 30 y 60 min", "Mas de tres horas", "No navega Internet"))
+Internet <- table(BarInternet)
+barplot(Internet, main = "Dedicacion de internet diaria de los estudiantes becados")
+Internet.TFrecuenciaI <- freq(ESTU_DEDICACIONINTERNET, plot = FALSE)
+Internet.TFrecuenciaI
+
+#Read exploration
+BarRead <- factor(BaseDataBecados$ESTU_DEDICACIONLECTURADIARIA, labels = c("30 minutos o menos", "Entre 1 y 2 horas", "Entre 30 y 60 min", "Mas de 2 horas", "No lee"))
+Read <- table(BarRead)
+barplot(Read, main = "Dedicación de lectura diaria")
+Read.TFrecuenciaR <- freq(ESTU_DEDICACIONLECTURADIARIA, plot = FALSE)
+Read.TFrecuenciaR
 
 #Hypotheses for the average
 LCData <- BaseDataNoBecados[c(10)]
@@ -63,3 +83,5 @@ t.test(LCData, mu = 62, alternative = "less")
 PData <- BaseData[c(29)]
 PDataSucces <- filter(PData, ESTU_GENERACIONE2 == 1)
 prop.test(x = nrow(PDataSucces), n = nrow(PData), p = 0.15, alternative = "less", conf.level = 0.95, correct = FALSE)
+
+#Hypotheses for Independent samples
