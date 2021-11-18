@@ -42,6 +42,18 @@ KindCollage.TFrecuenciaKindC
 #GPS College exploration
 PieGpsC <- factor(BaseDataBecados$COLE_AREA_UBICACION, labels = c("Urbano", "Rural"))
 GpsCollage <- table(PieGpsC)
+pie(GpsCollage, main = "Becados por ubicacion del colegio", col = c("red", "blue", clockwise = TRUE))
+legend("topright", c("Urbano", "Rural"), cex = 1.5, fill = c("red", "blue"))
+GpsCollage.TFrecuenciaGPSC <- freq(COLE_AREA_UBICACION, plot = FALSE)
+GpsCollage.TFrecuenciaGPSC
+
+#Stratum exploration
+BarStratumB <- factor(BaseDataBecados$FAMI_ESTRATOVIVIENDA, labels = c("Estrato 1", "Estrato 2", "Estrato 3" , "Estrato 4-6"))
+StratumBecados <- table(BarStratumB)
+barplot(StratumBecados)
+StratumBecados.TFrecuenciaStr <- freq(FAMI_ESTRATOVIVIENDA, plot = FALSE)
+StratumBecados.TFrecuenciaStr
+
 
 #Hypotheses for the average
 LCData <- BaseDataNoBecados[c(10)]
@@ -51,8 +63,3 @@ t.test(LCData, mu = 62, alternative = "less")
 PData <- BaseData[c(29)]
 PDataSucces <- filter(PData, ESTU_GENERACIONE2 == 1)
 prop.test(x = nrow(PDataSucces), n = nrow(PData), p = 0.15, alternative = "less", conf.level = 0.95, correct = FALSE)
-
-
-
-
-
