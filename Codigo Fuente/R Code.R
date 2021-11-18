@@ -85,3 +85,22 @@ PDataSucces <- filter(PData, ESTU_GENERACIONE2 == 1)
 prop.test(x = nrow(PDataSucces), n = nrow(PData), p = 0.15, alternative = "less", conf.level = 0.95, correct = FALSE)
 
 #Hypotheses for Independent samples
+E1Data <- filter(BaseData, FAMI_ESTRATOVIVIENDA == "Estrato 1")
+E3Data <- filter(BaseData, FAMI_ESTRATOVIVIENDA == "Estrato 3")
+t.test(x = E1Data$PUNT_GLOBAL, y = E3Data$PUNT_GLOBAL, mu = 0, alternative = "greater", sigma.x = sd(E1Data$PUNT_GLOBAL),
+       sigma.y = sd(E3Data$PUNT_GLOBAL), conf.level = 0.95)
+
+#Hypotheses for dependent samples
+
+
+
+
+
+
+
+
+
+
+
+
+
