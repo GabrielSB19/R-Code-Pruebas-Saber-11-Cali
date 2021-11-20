@@ -139,6 +139,18 @@ anova<- aov(lm(PUNT_INGLES ~FAMI_ESTRATOVIVIENDA))
 summary(anova)
 TukeyHSD(anova) 
 
+#Chi-Squared, Gender with global score
+attach(BaseData)
+tabla <- table(ESTU_GENERO)
+tabla.1 <- freq(ESTU_GENERO, plot = FALSE)
+tabla.1
+puntG <- cut(PUNT_GLOBAL, seq(from = 125, to = 425, by = 75), include.lowest = TRUE)
+tabla.2 <- freq(ordered(puntG), plot = TRUE)
+tabla.2
+tabla.3 <- crosstab(ESTU_GENERO, puntG, prop.r = TRUE, plot = TRUE, xlab = "Puntaje global", ylab = "Genero")
+tabla.3
+with(BaseData, chisq.test(ESTU_GENERO, puntG, correct = TRUE))
+
 
 
 
