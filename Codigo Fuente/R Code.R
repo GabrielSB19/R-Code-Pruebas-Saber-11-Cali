@@ -17,8 +17,9 @@ library(lattice)
 library(descr)
 library(openxlsx)
 library(dplyr)
+library(parameters)
 
-BaseData <- read_excel("")
+BaseData <- read_excel("C:/Users/usuario/OneDrive - Universidad Icesi (@icesi.edu.co)/Escritorio/Universidad/Semestre 4/Inferencia Estadistica/Proyecto final Inferencia/Base de Datos/Saber_11__2019-2 Trabajo Final.xlsx")
 
 BaseDataBecados <- filter(BaseData, ESTU_GENERACIONE == "GENERACION E - EXCELENCIA NACIONAL")
 BaseDataNoBecados <- filter(BaseData, ESTU_GENERACIONE == "NO")
@@ -48,61 +49,95 @@ GpsCollage.TFrecuenciaGPSC <- freq(COLE_AREA_UBICACION, plot = FALSE)
 GpsCollage.TFrecuenciaGPSC
 
 #Stratum B exploration
-BarStratumB <- factor(BaseDataBecados$FAMI_ESTRATOVIVIENDA, labels = c("Estrato 1", "Estrato 2", "Estrato 3" , "Estrato 4-6"))
-StratumBecados <- table(BarStratumB)
-barplot(StratumBecados, main = "Obtenci?n de becas por estratos")
-StratumBecados.TFrecuenciaStr <- freq(FAMI_ESTRATOVIVIENDA, plot = FALSE)
-StratumBecados.TFrecuenciaStr
+StratumBecados <- freq(BaseDataBecados$FAMI_ESTRATOVIVIENDA, plot = TRUE, main = "Obtencion de becas por estrato")
+StratumBecados
 
 #Stratum NB exploration
-BarStratumNB <- factor(BaseDataNoBecados$FAMI_ESTRATOVIVIENDA, labels = c("Estrato 1", "Estrato 2", "Estrato 3" , "Estrato 4-6"))
-StratumNBecados <- table(BarStratumNB)
-barplot(StratumNBecados, main = "No obtenci?n de becas por estratos")
-StratumNBecados.TFrecuenciaStr <- freq(FAMI_ESTRATOVIVIENDA, plot = FALSE)
-StratumNBecados.TFrecuenciaStr
+StratumNBecados <- freq(BaseDataNoBecados$FAMI_ESTRATOVIVIENDA, plot = TRUE, main = "No obtención de becas por estratos")
+StratumNBecados
 
 #Internet exploration
 BarInternet <- factor(BaseDataBecados$ESTU_DEDICACIONINTERNET, labels = c("30 minutos o menos", "Entre 1 y 3 horas", "Entre 30 y 60 min", "Mas de tres horas", "No navega Internet"))
 Internet <- table(BarInternet)
 barplot(Internet, main = "Dedicacion de internet diaria de los estudiantes becados")
-Internet.TFrecuenciaI <- freq(ESTU_DEDICACIONINTERNET, plot = FALSE)
+Internet.TFrecuenciaI <- freq(BaseDataBecados$ESTU_DEDICACIONINTERNET, plot = FALSE)
 Internet.TFrecuenciaI
 
 #Read exploration
 BarRead <- factor(BaseDataBecados$ESTU_DEDICACIONLECTURADIARIA, labels = c("30 minutos o menos", "Entre 1 y 2 horas", "Entre 30 y 60 min", "Mas de 2 horas", "No lee"))
 Read <- table(BarRead)
-barplot(Read, main = "Dedicaci?n de lectura diaria")
-Read.TFrecuenciaR <- freq(ESTU_DEDICACIONLECTURADIARIA, plot = FALSE)
+barplot(Read, main = "Dedicacion de lectura diaria")
+Read.TFrecuenciaR <- freq(BaseDataBecados$ESTU_DEDICACIONLECTURADIARIA, plot = FALSE)
 Read.TFrecuenciaR
 
+#Critical reading score data
+summary(BaseDataBecados$PUNT_LECTURA_CRITICA)
+boxplot(BaseDataBecados$PUNT_LECTURA_CRITICA, horizontal = TRUE, main = "Lectura Critica, Becados (Datos atipicos)")
+DataLCWO <- filter(BaseDataBecados, PUNT_LECTURA_CRITICA < 81)
+summary(DataLCWO$PUNT_LECTURA_CRITICA)
+boxplot(DataLCWO$PUNT_LECTURA_CRITICA, horizontal = TRUE, main = "Lectura critica, Becados (Sin Datos atipicos)")
+
+
+#Natural score data
+summary(BaseDataBecados$PUNT_C_NATURALES)
+boxplot(BaseDataBecados$PUNT_C_NATURALES, horizontal = TRUE, main = "Ciencias naturales, Becados (Datos atipicos)")
+DataCNWO <- filter(BaseDataBecados, PUNT_C_NATURALES > 62)
+summary(DataCNWO$PUNT_C_NATURALES)
+boxplot(DataCNWO$PUNT_C_NATURALES, horizontal = TRUE, main = "Ciencias naturales, Becados (Sin datos atipicos")
+
+#Mathematics score data
+summary(BaseDataBecados$PUNT_MATEMATICAS)
+boxplot(BaseDataBecados$PUNT_MATEMATICAS, horizontal = TRUE, main = "Matematicas, Becados (Datos atipicos)")
+DataMWO <- filter(BaseDataBecados, PUNT_MATEMATICAS < 86)
+summary(DataMWO$PUNT_MATEMATICAS)
+boxplot(DataMWO$PUNT_MATEMATICAS, horizontal = TRUE, main = "Matematicas, Becados (Sin datos atipicos")
+
+#Social score data
+summary(BaseDataBecados$PUNT_SOCIALES_CIUDADANAS)
+boxplot(BaseDataBecados$PUNT_SOCIALES_CIUDADANAS, horizontal = TRUE, main = "Ciencias Sociales, Becados (Datos atipicos)")
+DataCSWO <- filter(BaseDataBecados, PUNT_SOCIALES_CIUDADANAS < 83)
+summary(DataCSWO$PUNT_SOCIALES_CIUDADANAS)
+boxplot(DataCSWO$PUNT_SOCIALES_CIUDADANAS, horizontal = TRUE, main = "Ciencias Sociales, Becados (Sin datos atipicos")
+
+#English score data
+summary(BaseDataBecados$PUNT_INGLES)
+boxplot(BaseDataBecados$PUNT_INGLES, horizontal = TRUE, main = "Ingles, Becados (Datos atipicos)")
+DataEWO <- filter(BaseDataBecados, PUNT_INGLES < 91)
+summary(DataEWO$PUNT_INGLES)
+boxplot(DataEWO$PUNT_INGLES, horizontal = TRUE, main = "Ingles, Becados (Sin datos atipicos)")
+
+#Global score data
+summary(BaseDataBecados$PUNT_GLOBAL)
+boxplot(BaseDataBecados$PUNT_GLOBAL, horizontal = TRUE, main = "Puntaje global, Becados (Datos atipicos)")
+DataGWO <- filter(BaseDataBecados, PUNT_GLOBAL < 380)
+summary(DataGWO$PUNT_GLOBAL)
+boxplot(DataGWO$PUNT_GLOBAL, horizontal = TRUE, main = "Puntaje global, Becados (Sin datos atipicos)")
+
 #Hypotheses for the average
-LCData <- BaseDataNoBecados[c(10)]
-t.test(LCData, mu = 62, alternative = "less")
+t.test(BaseDataNoBecados$PUNT_LECTURA_CRITICA, mu = 62, alternative = "less", conf.level = 0.95)
 
 #Hypotheses for the proportion
-PData <- BaseData[c(29)]
-PDataSucces <- filter(PData, ESTU_GENERACIONE2 == 1)
-prop.test(x = nrow(PDataSucces), n = nrow(PData), p = 0.15, alternative = "less", conf.level = 0.95, correct = FALSE)
+PDataSucces <- filter(BaseData, ESTU_GENERACIONE2 == 1)
+prop.test(x = nrow(PDataSucces), n = nrow(BaseData), p = 0.15, alternative = "less", conf.level = 0.95, correct = FALSE)
 
-
-#ANOVA Which stratum belong to the students who obtained a better score on the English test?
-attach(BaseData)
-boxplot(PUNT_INGLES ~ FAMI_ESTRATOVIVIENDA) #Delete atypical data
-anova<- aov(lm(PUNT_INGLES ~FAMI_ESTRATOVIVIENDA))
-summary(anova)
-TukeyHSD(anova )
 
 #Hypotheses for Independent samples
 E1Data <- filter(BaseData, FAMI_ESTRATOVIVIENDA == "Estrato 1")
 E3Data <- filter(BaseData, FAMI_ESTRATOVIVIENDA == "Estrato 3")
-t.test(x = E1Data$PUNT_GLOBAL, y = E3Data$PUNT_GLOBAL, mu = 0, alternative = "greater", sigma.x = sd(E1Data$PUNT_GLOBAL),
+var.test(x = E1Data$PUNT_GLOBAL, y = E3Data$PUNT_GLOBAL, conf.level = 0.95)
+t.test(x = E1Data$PUNT_GLOBAL, y = E3Data$PUNT_GLOBAL, mu = 0, alternative = "less", sigma.x = sd(E1Data$PUNT_GLOBAL),
        sigma.y = sd(E3Data$PUNT_GLOBAL), conf.level = 0.95)
 
 #Hypotheses for dependent samples
+t.test(x = BaseData$PUNT_MATEMATICAS, y = BaseData$PUNT_INGLES, paired = TRUE, alternative = "greater", conf.level = 0.95)
 
 
-
-
+#ANOVA Which stratum belong to the students who obtained a better score on the English test?
+AnovaWOAtypical <- filter(BaseData, PUNT_INGLES < 79 & PUNT_INGLES > 22)
+boxplot(AnovaWOAtypical$PUNT_INGLES ~ AnovaWOAtypical$FAMI_ESTRATOVIVIENDA, xlab = "Estratos", ylab = "Puntaje ingles")
+anova<- aov(lm(PUNT_INGLES ~FAMI_ESTRATOVIVIENDA))
+summary(anova)
+TukeyHSD(anova) 
 
 
 
