@@ -30,7 +30,7 @@ PieGender <- factor(BaseDataBecados$ESTU_GENERO, labels = c("Femenino", "Masculi
 Genero <- table(PieGender)
 pie(Genero, main = "Becados por genero", col = c("purple", "orange"), clockwise = TRUE)
 legend("topright", c("Feminio", "Masculino"), cex = 1.5, fill = c("purple", "orange"))
-Genero.TFrecuenciaGenero <- freq(ESTU_GENERO, plot = FALSE)
+Genero.TFrecuenciaGenero <- freq(BaseDataBecados$ESTU_GENERO, plot = FALSE)
 Genero.TFrecuenciaGenero
 
 #Kind College exploration
@@ -38,7 +38,7 @@ PieKindC <- factor(BaseDataBecados$COLE_NATURALEZA, labels = c("No oficial", "of
 KindCollage <- table(PieKindC)
 pie(KindCollage, main = "Becados segun el tipo de colegio", col = c("green", "yellow"), clockwise = TRUE)
 legend("topright", c("No oficial", "Oficial"), cex = 1.5, fill = c("green", "yellow"))
-KindCollage.TFrecuenciaKindC <- freq(COLE_NATURALEZA, plot = FALSE)
+KindCollage.TFrecuenciaKindC <- freq(BaseDataBecados$COLE_NATURALEZA, plot = FALSE)
 KindCollage.TFrecuenciaKindC
 
 #GPS College exploration
@@ -46,7 +46,7 @@ PieGpsC <- factor(BaseDataBecados$COLE_AREA_UBICACION, labels = c("Urbano", "Rur
 GpsCollage <- table(PieGpsC)
 pie(GpsCollage, main = "Becados por ubicacion del colegio", col = c("red", "blue", clockwise = TRUE))
 legend("topright", c("Urbano", "Rural"), cex = 1.5, fill = c("red", "blue"))
-GpsCollage.TFrecuenciaGPSC <- freq(COLE_AREA_UBICACION, plot = FALSE)
+GpsCollage.TFrecuenciaGPSC <- freq(BaseDataBecados$COLE_AREA_UBICACION, plot = FALSE)
 GpsCollage.TFrecuenciaGPSC
 
 #Stratum B exploration
@@ -54,7 +54,7 @@ StratumBecados <- freq(BaseDataBecados$FAMI_ESTRATOVIVIENDA, plot = TRUE, main =
 StratumBecados
 
 #Stratum NB exploration
-StratumNBecados <- freq(BaseDataNoBecados$FAMI_ESTRATOVIVIENDA, plot = TRUE, main = "No obtención de becas por estratos")
+StratumNBecados <- freq(BaseDataNoBecados$FAMI_ESTRATOVIVIENDA, plot = TRUE, main = "No obtencion de becas por estratos")
 StratumNBecados
 
 #Internet exploration
@@ -77,7 +77,6 @@ boxplot(BaseDataBecados$PUNT_LECTURA_CRITICA, horizontal = TRUE, main = "Lectura
 DataLCWO <- filter(BaseDataBecados, PUNT_LECTURA_CRITICA < 81)
 summary(DataLCWO$PUNT_LECTURA_CRITICA)
 boxplot(DataLCWO$PUNT_LECTURA_CRITICA, horizontal = TRUE, main = "Lectura critica, Becados (Sin Datos atipicos)")
-
 
 #Natural score data
 summary(BaseDataBecados$PUNT_C_NATURALES)
@@ -115,7 +114,7 @@ summary(DataGWO$PUNT_GLOBAL)
 boxplot(DataGWO$PUNT_GLOBAL, horizontal = TRUE, main = "Puntaje global, Becados (Sin datos atipicos)")
 
 #Hypotheses for the average
-t.test(BaseDataNoBecados$PUNT_LECTURA_CRITICA, mu = 62, alternative = "less", conf.level = 0.95)
+t.test(BaseDataNoBecados$PUNT_LECTURA_CRITICA, mu = 62, alternative = "less", conf.level = 0.95, plot = TRUE)
 
 #Hypotheses for the proportion
 PDataSucces <- filter(BaseData, ESTU_GENERACIONE2 == 1)
@@ -130,7 +129,7 @@ t.test(x = E1Data$PUNT_GLOBAL, y = E3Data$PUNT_GLOBAL, mu = 0, alternative = "le
        sigma.y = sd(E3Data$PUNT_GLOBAL), conf.level = 0.95)
 
 #Hypotheses for dependent samples
-t.test(x = BaseData$PUNT_MATEMATICAS, y = BaseData$PUNT_INGLES, paired = TRUE, alternative = "greater", conf.level = 0.95)
+t.test(x = BaseDataBecados$PUNT_MATEMATICAS, y = BaseDataBecados$PUNT_INGLES, paired = TRUE, alternative = "greater", conf.level = 0.95)
 
 
 #ANOVA Which stratum belong to the students who obtained a better score on the English test?
@@ -154,6 +153,7 @@ with(BaseData, chisq.test(ESTU_GENERO, puntG, correct = TRUE))
 
 #Linear Regression, Global and Mathematics
 LRGM <- read_excel("C:/Users/usuario/OneDrive - Universidad Icesi (@icesi.edu.co)/Escritorio/Universidad/Semestre 4/Inferencia Estadistica/Proyecto final Inferencia/Base de Datos/Global - Matematicas, Regresión Lineal.xlsx")
+LRGM <- filter(LRGM, `Puntaje Global` < 375 & `Puntaje Matematicas` < 100 & `Puntaje Matematicas` > 65)
 attach(LRGM)
 plot(`Puntaje Global`, `Puntaje Matematicas`)
 cor.test(`Puntaje Global`, `Puntaje Matematicas`)
@@ -163,3 +163,6 @@ Y_estim<-predict(Regresion,list(`Puntaje Global` = 360))
 Y_estim
 dwtest(Regresion, alternative = "two.sided")
 ks.test(x = `Puntaje Global`, y = `Puntaje Matematicas`, alternative = "two.sided", exact = NULL, tol=1e-8, simulate.p.value=FALSE)
+bptest(Regresion)
+hist(`Puntaje Global`)
+hist(`Puntaje Matematicas`)
