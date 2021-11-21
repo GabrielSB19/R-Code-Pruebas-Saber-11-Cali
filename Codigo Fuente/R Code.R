@@ -18,6 +18,7 @@ library(descr)
 library(openxlsx)
 library(dplyr)
 library(parameters)
+library(nortest)
 
 BaseData <- read_excel("C:/Users/usuario/OneDrive - Universidad Icesi (@icesi.edu.co)/Escritorio/Universidad/Semestre 4/Inferencia Estadistica/Proyecto final Inferencia/Base de Datos/Saber_11__2019-2 Trabajo Final.xlsx")
 
@@ -151,12 +152,14 @@ tabla.3 <- crosstab(ESTU_GENERO, puntG, prop.r = TRUE, plot = TRUE, xlab = "Punt
 tabla.3
 with(BaseData, chisq.test(ESTU_GENERO, puntG, correct = TRUE))
 
-
-
-
-
-
-
-
-
-
+#Linear Regression, Global and Mathematics
+LRGM <- read_excel("C:/Users/usuario/OneDrive - Universidad Icesi (@icesi.edu.co)/Escritorio/Universidad/Semestre 4/Inferencia Estadistica/Proyecto final Inferencia/Base de Datos/Global - Matematicas, Regresión Lineal.xlsx")
+attach(LRGM)
+plot(`Puntaje Global`, `Puntaje Matematicas`)
+cor.test(`Puntaje Global`, `Puntaje Matematicas`)
+Regresion <- lm(`Puntaje Matematicas` ~ `Puntaje Global`, data = LRGM)
+summary(Regresion)
+Y_estim<-predict(Regresion,list(`Puntaje Global` = 360))
+Y_estim
+dwtest(Regresion, alternative = "two.sided")
+ks.test(x = `Puntaje Global`, y = `Puntaje Matematicas`, alternative = "two.sided", exact = NULL, tol=1e-8, simulate.p.value=FALSE)
